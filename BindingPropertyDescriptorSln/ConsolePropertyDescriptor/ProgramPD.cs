@@ -1,19 +1,17 @@
 ﻿using System;
 
-namespace ConsoleINPC
+namespace ConsolePropertyDescriptor
 {
-	// Контролер
-	class Program
+	class ProgramPD
 	{
 		static void Main(string[] args)
 		{
 			// Создание источника данных (ViewModel)
-			SourceClass source = new SourceClass();
+			SourceClassPD source = new SourceClassPD();
 
 			// Создание двух Представлений для одного источника
-			//TargetClass<SourceClass> target1 = new TargetClass<SourceClass>("Первый", source, nameof(source.Lenght));
-			TargetClass<SourceClass> target1 = new TargetClass<SourceClass>("Первый", source, nameof(source.Number)); 
-			TargetClass<SourceClass> target2 = new TargetClass<SourceClass>("Второй", source, nameof(source.Number));
+			TargetClassPD target1 = new TargetClassPD("Первый", source, nameof(source.Number));
+			TargetClassPD target2 = new TargetClassPD("Второй", source, nameof(source.Number));
 
 			// Цикл для изменения Представления и Источника
 			do
@@ -30,6 +28,8 @@ namespace ConsoleINPC
 
 				Console.Write("Нажмите Enter для Продолжения или Esc для Выхода.....");
 			} while (Console.ReadKey().Key != ConsoleKey.Escape);
+
 		}
 	}
+
 }

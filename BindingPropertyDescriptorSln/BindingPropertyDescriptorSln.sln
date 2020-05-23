@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BindingPropertyDescriptor",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleINPC", "ConsoleINPC\ConsoleINPC.csproj", "{97A3ABE3-A566-49B9-8E1A-2B3E7C8F80DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsolePropertyDescriptor", "ConsolePropertyDescriptor\ConsolePropertyDescriptor.csproj", "{2198F6DB-4942-4AD4-B7AE-B7010D95E839}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{97A3ABE3-A566-49B9-8E1A-2B3E7C8F80DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97A3ABE3-A566-49B9-8E1A-2B3E7C8F80DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97A3ABE3-A566-49B9-8E1A-2B3E7C8F80DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2198F6DB-4942-4AD4-B7AE-B7010D95E839}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2198F6DB-4942-4AD4-B7AE-B7010D95E839}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2198F6DB-4942-4AD4-B7AE-B7010D95E839}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2198F6DB-4942-4AD4-B7AE-B7010D95E839}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

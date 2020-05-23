@@ -35,5 +35,20 @@ namespace ConsoleINPC
 				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Number)));
 			}
 		}
+
+		private double _lenght;
+
+		public double Lenght
+		{
+			get => _lenght; 
+			set
+			{
+				if (_lenght == value) return;
+
+				_lenght = value;
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Lenght)));
+			}
+		}
 	}
+
 }

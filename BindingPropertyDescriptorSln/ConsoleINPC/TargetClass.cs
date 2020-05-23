@@ -23,7 +23,7 @@ namespace ConsoleINPC
 			get => _value;
 			set
 			{
-				// Проверка изменения значения. Если он не изменилось, то выход.
+				// Проверка изменения значения. Если оно не изменилось, то выход.
 				if ((_value == null && value == null) || (_value != null && _value.Equals(value))) return;
 
 				// Проверка, что Представление - это свойство Text.
