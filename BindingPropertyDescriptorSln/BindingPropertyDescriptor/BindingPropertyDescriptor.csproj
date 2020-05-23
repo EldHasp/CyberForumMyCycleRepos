@@ -94,5 +94,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ConsolePropertyDescriptorSource\ConsolePropertyDescriptorSource.csproj">
+      <Project>{0b564758-d7e6-42d9-ae77-ab6062265f68}</Project>
+      <Name>ConsolePropertyDescriptorSource</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

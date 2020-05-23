@@ -36,17 +36,17 @@ namespace ConsoleINPC
 			}
 		}
 
-		private double _lenght;
+		private double _length;
 
-		public double Lenght
+		public double Length
 		{
-			get => _lenght; 
+			get => _length; 
 			set
 			{
-				if (_lenght == value) return;
+				if (_length == value) return;
 
-				_lenght = value;
-				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Lenght)));
+				_length = value;
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Length)));
 			}
 		}
 	}

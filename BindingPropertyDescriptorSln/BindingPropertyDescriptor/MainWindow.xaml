@@ -3,10 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BindingPropertyDescriptor"
+        xmlns:local="clr-namespace:BindingPropertyDescriptor" 
+        xmlns:vm="clr-namespace:ConsolePropertyDescriptorSource;assembly=ConsolePropertyDescriptorSource"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        FontSize="30"
+        Title="MainWindow" Height="160" Width="200">
+    <Window.DataContext>
+        <vm:SourceClassPDS/>
+    </Window.DataContext>
+    <StackPanel>
+        <TextBlock Text="{Binding Text}"/>
+        <TextBlock Text="{Binding Length}"/>
+        <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+    </StackPanel>
 </Window>
