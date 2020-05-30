@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AttachedPropertiesWPF"
         mc:Ignorable="d"
-        Title="MainWindow (Попробуйте менять размер окна и количество строк, колонк.)" Height="450" Width="800"
+        Height="450" Width="800"
+        Title="MainWindow (Попробуйте менять размер окна и количество строк, колонк.)"
         xmlns:pa="clr-namespace:AttachedProperties;assembly=AttachedProperties">
     <Grid>
         <Grid.RowDefinitions>

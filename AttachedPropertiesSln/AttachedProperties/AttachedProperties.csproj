@@ -46,6 +46,8 @@
   <ItemGroup>
     <Compile Include="FrmElem.cs" />
     <Compile Include="Grid.cs" />
+    <Compile Include="PassBox - Text.cs" />
+    <Compile Include="PassBox - Security.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

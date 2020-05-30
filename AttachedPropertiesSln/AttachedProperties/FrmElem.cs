@@ -40,14 +40,14 @@ namespace AttachedProperties
 			if (!(d is FrameworkElement element))
 				throw new ArgumentException("Must be a FrameworkElement");
 
-			/// Получение элемента сохраняющего пропорции.
+			// Получение элемента сохраняющего пропорции.
 			SizeChangedElement changedElement = GetSizeChangeElement(element);
 
-			/// Если элемент не задан, то его создание и сохранение.
+			// Если элемент не задан, то его создание и сохранение.
 			if (changedElement == null)
 				SetSizeChangeElement(element, changedElement = new SizeChangedElement(element));
 
-			/// Передача нового значения пропорции.
+			// Передача нового значения пропорции.
 			changedElement.SetWidthToHeight((double)e.NewValue);
 		}
 
