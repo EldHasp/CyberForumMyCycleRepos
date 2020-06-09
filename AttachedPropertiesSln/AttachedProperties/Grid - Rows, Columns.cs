@@ -5,7 +5,7 @@ using System.Windows.Controls;
 namespace AttachedProperties
 {
 	/// <summary>Attached Properties for Grid</summary>
-	public static class Grid
+	public static partial class Grid
 	{
 		/// <summary>Возвращает заданное значение количества строк.
 		/// Оно может отличаться от реального значения, 
