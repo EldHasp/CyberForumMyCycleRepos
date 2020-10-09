@@ -1,0 +1,82 @@
+﻿<Window x:Class="MessageBus.FirstWind"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MessageBus"
+        mc:Ignorable="d"
+        Title="FirstWind" Height="200" Width="300" Loaded="Window_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border Margin="5" Padding="5" Background="LightGreen">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.ColumnSpan="2" Text="Нетипизированный Мессенджер" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="1"  Text="Текст: " HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="2" Text="Число: " HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="1" Text="Первый Текст" VerticalAlignment="Center" TextChanged="TextBoxText_TextChanged"/>
+                <TextBox Grid.Column="1" Grid.Row="2" Text="11111111" VerticalAlignment="Center" TextChanged="TextBoxNumber_TextChanged"/>
+            </Grid>
+        </Border>
+        <Border Grid.Row="1" Margin="5" Padding="5" Background="LightBlue">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.ColumnSpan="2" Text="Типизированный Мессенджер" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="1"  Text="Текст: " HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="2" Text="Число: " HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="1" Text="Второй Текст" VerticalAlignment="Center" TextChanged="TextBoxText_TextChanged_T"/>
+                <TextBox Grid.Column="1" Grid.Row="2" Text="2222" VerticalAlignment="Center" TextChanged="TextBoxNumber_TextChanged_T"/>
+            </Grid>
+        </Border>
+    </Grid>
+    <x:Code>
+        <![CDATA[
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            new SecondWind().Show();
+        }
+
+        private void TextBoxText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            MessengerStatic.Send(((TextBox)sender).Text);
+        }
+
+        private void TextBoxNumber_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (sender is TextBox textBox && int.TryParse(textBox.Text, out int num))
+               MessengerStatic.Send(num); 
+        }
+
+        private void TextBoxText_TextChanged_T(object sender, TextChangedEventArgs e)
+        {
+            Messenger.Default.Send(((TextBox)sender).Text);
+        }
+
+        private void TextBoxNumber_TextChanged_T(object sender, TextChangedEventArgs e)
+        {
+            if (sender is TextBox textBox && int.TryParse(textBox.Text, out int num))
+               Messenger.Default.Send(num); 
+        }
+       ]]>
+    </x:Code>
+</Window>
