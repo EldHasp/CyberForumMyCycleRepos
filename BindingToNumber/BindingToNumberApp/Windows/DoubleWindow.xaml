@@ -1,0 +1,31 @@
+﻿<Window x:Class="AppBindingToNumeric.DoubleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AppBindingToNumeric"
+        mc:Ignorable="d" FontSize="20"
+        Title="Example #1: Binding to Double Property"
+        Height="200" Width="1000">
+    <FrameworkElement.Resources>
+        <local:Numbers x:Key="Numbers"/>
+    </FrameworkElement.Resources>
+    <FrameworkElement.DataContext>
+        <Binding Mode="OneWay" Source="{StaticResource Numbers}"/>
+    </FrameworkElement.DataContext>
+    <Grid Background="LightGreen">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <UniformGrid Background="LightBlue" Columns="2">
+            <TextBlock Text="TextBlock"/>
+            <TextBox Margin="5" Text="{Binding DoubleValue}" IsEnabled="False"/>
+            <TextBlock Text="UpdateSourceTrigger=Default OR LostFocus"/>
+            <TextBox Margin="5" Text="{Binding DoubleValue}"/>
+            <TextBlock Text="UpdateSourceTrigger=PropertyChanged"/>
+            <TextBox Margin="5" Text="{Binding DoubleValue, UpdateSourceTrigger=PropertyChanged}"/>
+        </UniformGrid>
+
+    </Grid>
+</Window>
