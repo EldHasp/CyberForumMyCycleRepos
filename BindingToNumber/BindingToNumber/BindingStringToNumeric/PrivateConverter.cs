@@ -170,10 +170,7 @@ namespace BindingStringToNumeric
                 }
             }
             /// <summary>Метод присваивающий "0" свойству <see cref="TextBox.Text"/>.</summary>
-            private static void ZeroText(TextBox textBox)
-            {
-                textBox.SelectedText = textBox.Text = "0";
-            }
+            private static void ZeroText(TextBox textBox) => textBox.SelectedText = textBox.Text = "0";
 
             public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
             {
