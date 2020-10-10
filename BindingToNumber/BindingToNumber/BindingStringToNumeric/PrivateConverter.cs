@@ -129,12 +129,14 @@ namespace BindingStringToNumeric
                 {
                     if (string.IsNullOrWhiteSpace(text))
                         return false;
-                    if (text[text.Length - 1] == 'e' || text[text.Length - 1] == 'E')
-                        text = text.Remove(text.Length - 1, 1);
-                    else if (text.Length > 1 && (text[text.Length - 1] == '-' || text[text.Length - 1] == '+')
-                        && (text[text.Length - 2] == 'e' || text[text.Length - 2] == 'E'))
-                        text = text.Remove(text.Length - 2, 2);
-
+                    if (style.HasFlag(NumberStyles.AllowExponent))
+                    {
+                        if (text[text.Length - 1] == 'e' || text[text.Length - 1] == 'E')
+                            text = text.Remove(text.Length - 1, 1);
+                        else if (text.Length > 1 && (text[text.Length - 1] == '-' || text[text.Length - 1] == '+')
+                            && (text[text.Length - 2] == 'e' || text[text.Length - 2] == 'E'))
+                            text = text.Remove(text.Length - 2, 2);
+                    }
                     return tryParse(text, style, culture, out _);
                 }
             }
@@ -176,7 +178,7 @@ namespace BindingStringToNumeric
             public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
             {
                 Debug.Write(GetType().Name + $".ConvertBack.value: \"{value}\" to ");
-                object[] ret = null;
+                object ret = null;
 
                 string text = (string)value;
 
@@ -192,12 +194,12 @@ namespace BindingStringToNumeric
                 // Получение из строки числа заданного типа в заданной культуре
                 // Если удалось, то оно возвращается.
                 if (tryParse(text, style, culture, out object target))
-                    ret = new object[] { target };
+                    ret = target;
 
                 Debug.WriteLine($"return: {(ret == null ? "null" : target)}");
 
-                // Иначе возвращается массив с одним элементом: полученным числом.
-                return ret;
+                // Dозвращается массив с одним элементом: полученным числом или null.
+                return new object[] { ret };
             }
 
             /// <summary>Экземпляр конвертера.<br/>
