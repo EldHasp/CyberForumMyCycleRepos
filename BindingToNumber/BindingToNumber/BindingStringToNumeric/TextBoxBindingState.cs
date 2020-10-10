@@ -54,7 +54,10 @@ namespace BindingStringToNumeric
             /// <remarks>Текущее значение <see cref="NewText"/> записывается в <see cref="OldText"/>.<br/>
             /// А в <see cref="NewText"/> записывается параметр newText.</remarks>
             public void UpdateText(string newText)
-                => (OldText, NewText) = (NewText, newText);
+            {
+                if (NewText != newText)
+                    (OldText, NewText) = (NewText, newText);
+            }
         }
 
         /// <summary>Состояния работы метода <see cref="MultiBindingExpression.UpdateSource"/>.</summary>
@@ -65,7 +68,7 @@ namespace BindingStringToNumeric
             /// <summary>Метод вызван.</summary>
             Called,
             /// <summary>Метод вызывался, но обновления источника не произошло.</summary>
-            CallCanseled
+            CallCanceled
         }
 
         /// <summary>Состояния работы метода <see cref="MultiBindingExpression.UpdateTarget"/>.</summary>

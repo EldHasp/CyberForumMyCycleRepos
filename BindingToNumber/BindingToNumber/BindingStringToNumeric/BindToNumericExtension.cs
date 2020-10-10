@@ -60,13 +60,12 @@ namespace BindingStringToNumeric
             // Сохранить новый текст и параметры изменения
             UpdateTextBindingState(textBox, e.Changes);
 
-            
-
             // Если изменение произошло по привязке - выйти из метода
             if (bindingState.TextChangeSource == PropertyChangeSourceEnum.Binding)
             {
                 // Сброс состояния обновления по привязке.
                 bindingState.TextChangeSource = PropertyChangeSourceEnum.NotBinding;
+
                 return;
             }
 
@@ -98,7 +97,7 @@ namespace BindingStringToNumeric
             else if (!triggerHasUpdated && bindPriv.IsNumericOnly)
             {
                 // Установка флага отменённого обновления.
-                bindingState.UpdateSourceState = UpdateSourceStateEnum.CallCanseled;
+                bindingState.UpdateSourceState = UpdateSourceStateEnum.CallCanceled;
 
                 // Вызов обновления привязки от источника для обработки причины прерывания обновления.
                 bindingSource.UpdateTarget();

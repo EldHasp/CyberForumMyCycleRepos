@@ -85,9 +85,9 @@ namespace BindingStringToNumeric
 
                     // После вызова UpdateSource() обновление источника не произошло
                     // Значит в TextBox.Text некорректное значение и надо вернуть предыдущее его значение.
-                    case UpdateSourceStateEnum.CallCanseled:
+                    case UpdateSourceStateEnum.CallCanceled:
 
-                        // Устанавливается флаг обновления по привязке
+                        // Устанавливается флаг обновления из конвертера привязки
                         bindingState.TextChangeSource = PropertyChangeSourceEnum.Binding;
 
                         // Проверяется на пустую строку.
@@ -95,12 +95,21 @@ namespace BindingStringToNumeric
                         // Это автоматически сделает метод UndoText().
                         if (string.IsNullOrWhiteSpace(newText))
                             ZeroText(textBox);
-                        else
+
+                        else if (!BeginScientific(newText))
                             // Возращается TextBox старое значение.
                             UndoText(textBox, oldText, bindingState.Changes);
 
-                        // Возращается изменённое значение TextBox.
-                        ret = textBox.Text;
+                        // Сброс флага обновления из конвертера привязки
+                        bindingState.TextChangeSource = PropertyChangeSourceEnum.NotBinding;
+
+                        // Проверка строки в TextBox.
+                        // Если она корректна, то для сброса валидации надо её же и вернуть
+                        if (tryParse(textBox.Text, style, culture, out _))
+                            ret = textBox.Text;
+                        else
+                            // Иначе - отмена присвоения по привязке
+                            ret = Binding.DoNothing;
 
                         break;
                     default:
@@ -115,7 +124,21 @@ namespace BindingStringToNumeric
 
                 return ret; ;
 
+                // Проверка строки на начало научной записи числа
+                bool BeginScientific(string text)
+                {
+                    if (string.IsNullOrWhiteSpace(text))
+                        return false;
+                    if (text[text.Length - 1] == 'e' || text[text.Length - 1] == 'E')
+                        text = text.Remove(text.Length - 1, 1);
+                    else if (text.Length > 1 && (text[text.Length - 1] == '-' || text[text.Length - 1] == '+')
+                        && (text[text.Length - 2] == 'e' || text[text.Length - 2] == 'E'))
+                        text = text.Remove(text.Length - 2, 2);
+
+                    return tryParse(text, style, culture, out _);
+                }
             }
+
 
             /// <summary>Метод возвращающий значение <see cref="TextBox.Text"/> в состояние до изменений.</summary>
             /// <param name="textBox"><see cref="TextBox"/>.</param>

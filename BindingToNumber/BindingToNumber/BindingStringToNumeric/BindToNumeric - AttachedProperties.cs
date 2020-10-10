@@ -43,7 +43,7 @@ namespace BindingStringToNumeric
         {
             TextBoxBindingState state = GetBindingState(textBox);
 
-            if (state.NewText != textBox.Text)
+            //if (state.NewText != textBox.Text)
                 state.UpdateText(textBox.Text);
 
             state.Changes = changes;
