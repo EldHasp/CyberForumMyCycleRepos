@@ -92,7 +92,6 @@ namespace BindingStringToNumeric
 
                         // Проверяется на пустую строку.
                         // Если она пустая, то надо её заменить на "0".
-                        // Это автоматически сделает метод UndoText().
                         if (string.IsNullOrWhiteSpace(newText))
                         {
                             textBox.SelectedText = "0";
