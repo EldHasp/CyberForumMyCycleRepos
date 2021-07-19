@@ -102,6 +102,11 @@ namespace BindingStringToNumeric
                 // Вызов обновления привязки от источника для обработки причины прерывания обновления.
                 bindingSource.UpdateTarget();
 
+                if (textBox.SelectedText == "0")
+                {
+                    multiBindingExpression.UpdateSource();
+                }
+
             }
 
             // Сброс флага обновления из метода UpdateSource().
