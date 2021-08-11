@@ -195,7 +195,7 @@ namespace BindingStringToNumeric
 
                 Debug.WriteLine($"return: {(ret == null ? "null" : target)}");
 
-                // Dозвращается массив с одним элементом: полученным числом или null.
+                // Возвращается массив с одним элементом: полученным числом или null.
                 return new object[] { ret };
             }
 
