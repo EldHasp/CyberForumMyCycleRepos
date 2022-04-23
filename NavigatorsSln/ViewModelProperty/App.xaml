@@ -1,0 +1,40 @@
+﻿<Application x:Class="ViewModelProperties.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ViewModelProperties"
+             StartupUri="/MainWindow.xaml">
+    <Application.Resources>
+        <local:ViewSelector x:Key="viewSelector">
+            <local:ViewSelector.Welcome>
+                <DataTemplate>
+                    <local:WelcomeUC
+                        DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                </DataTemplate>
+            </local:ViewSelector.Welcome>
+            <local:ViewSelector.SignUp>
+                <DataTemplate>
+                    <local:SignUpUC
+                        DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                </DataTemplate>
+            </local:ViewSelector.SignUp>
+            <local:ViewSelector.SignIn>
+                <DataTemplate>
+                    <local:SignInUC
+                        DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                </DataTemplate>
+            </local:ViewSelector.SignIn>
+            <local:ViewSelector.NotAuthorized>
+                <DataTemplate>
+                    <local:AuthorizationUcDts
+                        DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                </DataTemplate>
+            </local:ViewSelector.NotAuthorized>
+            <local:ViewSelector.IsAuthorized>
+                <DataTemplate>
+                    <local:WorkingUC
+                        DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                </DataTemplate>
+            </local:ViewSelector.IsAuthorized>
+        </local:ViewSelector>
+    </Application.Resources>
+</Application>

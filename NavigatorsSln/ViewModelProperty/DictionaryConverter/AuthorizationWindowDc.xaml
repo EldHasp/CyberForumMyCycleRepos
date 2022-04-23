@@ -1,0 +1,24 @@
+﻿<Window x:Class="ViewModelProperties.AuthorizationWindowDc"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ViewModelProperties"
+        xmlns:mext="clr-namespace:MarkupExtensions;assembly=Common" xmlns:cnvs="clr-namespace:WpfMvvm.Converters;assembly=Common" xmlns:sys="clr-namespace:System;assembly=netstandard"
+        mc:Ignorable="d"
+        Title="AuthorizationWindow (DictionaryConverter)" Height="450" Width="800"
+        DataContext="{DynamicResource vm}">
+    <FrameworkElement.Resources>
+        <local:AuthorizationVM x:Key="vm"/>
+        <cnvs:DictionaryConverter x:Key="isAthorization">
+            <local:WorkingUC x:Key="{x:Static local:Keys.True}"/>
+            <local:AuthorizationUcDc x:Key="{x:Static local:Keys.False}"/>
+        </cnvs:DictionaryConverter>
+    </FrameworkElement.Resources>
+    <FrameworkElement.CommandBindings>
+        <CommandBinding Command="{local:AuthorizationCommand}"/>
+    </FrameworkElement.CommandBindings>
+
+    <ContentPresenter Content="{Binding IsAuthorized, Converter={StaticResource isAthorization}}"/>
+
+</Window>

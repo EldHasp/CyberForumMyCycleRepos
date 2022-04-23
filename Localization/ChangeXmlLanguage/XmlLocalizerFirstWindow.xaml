@@ -1,0 +1,43 @@
+﻿<Window x:Class="ChangeXmlLanguage.XmlLocalizerFirstWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChangeXmlLanguage" xmlns:lzat="clr-namespace:Localization;assembly=Localization"
+        mc:Ignorable="d"
+        Title="XmlLocalizerFirstWindow1" Height="450" Width="200"
+        FontSize="20"
+        DataContext="{DynamicResource vm}">
+    <FrameworkElement.Resources>
+        <local:DecimalValueVM x:Key="vm"
+                              Number="0.1234"/>
+    </FrameworkElement.Resources>
+    <Grid>
+        <UniformGrid Columns="1" Background="AliceBlue">
+            <TextBox x:Name="textBox" Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}" Margin="10" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding Text, ElementName=textBox, Converter={local:StringToNumber}}" Margin="10" VerticalAlignment="Center" IsReadOnly="True"/>
+            <ComboBox x:Name="comboBox" ItemsSource="{lzat:XLzerBinding Languages}"
+                      DisplayMemberPath="Key" Margin="10" VerticalAlignment="Center"/>
+            <Button Command="{lzat:XLzerBinding SetLanguageCommand}"
+                    CommandParameter="{Binding SelectedItem.Key, ElementName=comboBox}"
+                    Padding="5" Margin="10" VerticalAlignment="Center">
+                <TextBlock Text="Установить&#10;XML язык" TextAlignment="Center"/>
+            </Button>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Viewbox Width="40">
+                    <CheckBox IsChecked="{lzat:XLzerBinding Path=IsChangeThreadCulture}"/>
+                </Viewbox>
+                <TextBlock Grid.Column="1" Text="Менять&#10;культуру&#10;потока" Margin="10,0,0,0"/>
+            </Grid>
+            <!--<TextBox Text="{Binding Number}" Margin="10" VerticalAlignment="Center" Language="en"/>
+            <Grid Language="ru">
+                <TextBox Text="{Binding Number}" Margin="10" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBox Text="{Binding Number, ConverterCulture=ru}" Margin="10" VerticalAlignment="Center" Language="en"/>-->
+        </UniformGrid>
+    </Grid>
+</Window>

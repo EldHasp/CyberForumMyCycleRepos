@@ -1,0 +1,30 @@
+﻿<Window x:Class="ChangeXmlLanguage.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChangeXmlLanguage" xmlns:sys="clr-namespace:System;assembly=netstandard"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <local:WindowList x:Key="windows">
+            <local:WindowItem WindowType="DemoDifferences"
+                              Title="Влияние языка, культуры."
+                              ToolTip="Демонстрация изменения языка и культуры Окна и Потока. И их влияния на десятичную точку при преобразовании числа."/>
+            <local:WindowItem WindowType="XmlLocalizerFirstWindow"
+                              Title="Пример использования XmlLocalizer."
+                              ToolTip="Демонстрация изменения языка и культуры Окна и Потока. И их влияния на десятичную точку при преобразовании числа."/>
+        </local:WindowList>
+    </Window.Resources>
+    <Grid>
+        <ListBox ItemsSource="{DynamicResource windows}"
+                 DisplayMemberPath="Title"
+                 SelectionChanged="OnSelectWindow">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="ToolTip" Value="{Binding ToolTip}"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+    </Grid>
+</Window>

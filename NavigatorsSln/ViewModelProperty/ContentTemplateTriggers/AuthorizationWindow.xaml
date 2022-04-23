@@ -1,0 +1,40 @@
+﻿<Window x:Class="ViewModelProperties.AuthorizationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ViewModelProperties"
+        mc:Ignorable="d"
+        Title="AuthorizationWindow" Height="450" Width="800"
+        DataContext="{DynamicResource vm}">
+    <FrameworkElement.Resources>
+        <local:AuthorizationVM x:Key="vm"/>
+    </FrameworkElement.Resources>
+    <FrameworkElement.CommandBindings>
+        <CommandBinding Command="{local:AuthorizationCommand}" Executed="{local:AuthorizationCommand}"/>
+    </FrameworkElement.CommandBindings>
+    <ContentPresenter Content="{Binding}">
+        <ContentPresenter.Style>
+            <Style TargetType="ContentPresenter">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate DataType="local:AuthorizationVM">
+                            <local:AuthorizationUC/>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsAuthorized}" Value="true">
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate DataType="local:AuthorizationVM">
+                                    <local:WorkingUC/>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ContentPresenter.Style>
+    </ContentPresenter>
+</Window>

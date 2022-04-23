@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="ViewModelProperties.AuthorizationUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ViewModelProperties"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Background="AliceBlue">
+    <d:FrameworkElement.DataContext>
+        <local:AuthorizationVM/>
+    </d:FrameworkElement.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Страница авторизации" HorizontalAlignment="Center" FontSize="20"/>
+        <ContentPresenter Grid.Row="1" Margin="20" Content="{Binding}">
+            <ContentPresenter.Style>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate DataType="local:AuthorizationVM">
+                                <local:WelcomeUC/>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding AuthorizationMode}" Value="SignUp">
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate DataType="local:AuthorizationVM">
+                                        <local:SignUpUC/>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding AuthorizationMode}" Value="SignIn">
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate DataType="local:AuthorizationVM">
+                                        <local:SignInUC/>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                   </Style.Triggers>
+                </Style>
+            </ContentPresenter.Style>
+        </ContentPresenter>
+    </Grid>
+</UserControl>

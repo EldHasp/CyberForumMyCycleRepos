@@ -1,0 +1,61 @@
+﻿<Window x:Class="ViewModelProperties.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ViewModelProperties" xmlns:cnvs="clr-namespace:Converters;assembly=Common" xmlns:poco="clr-namespace:Poco;assembly=Common"
+        mc:Ignorable="d"
+        Title="Примеры навигации от свойств ViewModel"
+        Height="450" Width="800"
+        FontSize="20">
+    <Window.Resources>
+        <poco:WindowList x:Key="windows">
+            <poco:WindowItem WindowType="AuthorizationWindow"
+                             Title="Тригерры Шаблона Контента."
+                             ToolTip="Переключение типов представлений триггерами Шаблона Контента."/>
+            <poco:WindowItem WindowType="AuthorizationWindowCt"
+                             Title="Тригерры Контента."
+                             ToolTip="Переключение типов представлений триггерами Контента."/>
+            <poco:WindowItem WindowType="AuthorizationWindowDc"
+                             Title="Словарь-конвертер."
+                             ToolTip="Пример использования DictionaryConverter для переключения представлений в Контенте."/>
+            <poco:WindowItem WindowType="AuthorizationWindowDts"
+                             Title="Селектор шаблонов данных для Контента."
+                             ToolTip="Пример использования DataTemplateSelector для переключения представлений в Контенте."/>
+        </poco:WindowList>
+        <DataTemplate x:Key="itemTemplate"
+                      DataType="poco:WindowItem">
+            <Border x:Name="border" Padding="5" Margin="5"
+                    ToolTip="{Binding ToolTip}">
+                <Button x:Name="button" Content="{Binding Title}" Padding="15 5"
+                        Command="{local:ShowWindow}"
+                        CommandParameter="{Binding}"
+                        FontWeight="ExtraBold"/>
+            </Border>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsInstance}" Value="True">
+                    <Setter TargetName="border" Property="Background" Value="LightBlue"/>
+                    <Setter TargetName="button" Property="Foreground" Value="Blue"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock TextAlignment="Center"
+                   TextWrapping="Wrap" HorizontalAlignment="Center" Margin="10">
+            Различные способы реализации страничной навигации
+            <LineBreak/>
+            зависимой от свойст ViewModel
+            <LineBreak/>
+            с использованием UserControl для представления страниц.
+        </TextBlock>
+        <ItemsControl Grid.Row="1"
+                      ItemsSource="{DynamicResource windows}"
+                      ItemTemplate="{DynamicResource itemTemplate}"/>
+
+    </Grid>
+</Window>

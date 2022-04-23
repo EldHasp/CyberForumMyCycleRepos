@@ -1,0 +1,56 @@
+﻿<Window x:Name="window" x:Class="ChangeXmlLanguage.DemoDifferences"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChangeXmlLanguage" xmlns:spcoll="clr-namespace:System.Collections.Specialized;assembly=System.Collections.Specialized" xmlns:sys="clr-namespace:System;assembly=netstandard"
+        mc:Ignorable="d"
+        Title="MainWindow" SizeToContent="Height" Width="550"
+        FontSize="20"
+        DataContext="{DynamicResource number}">
+    <FrameworkElement.Resources>
+        <sys:Decimal x:Key="number">0.1234</sys:Decimal>
+        <spcoll:StringCollection x:Key="cultures">
+            <x:Null/>
+            <sys:String>en</sys:String>
+            <sys:String>ru</sys:String>
+            <sys:String>de</sys:String>
+            <sys:String>fr</sys:String>
+        </spcoll:StringCollection>
+    </FrameworkElement.Resources>
+    <UniformGrid Columns="2">
+        <StackPanel Background="AliceBlue">
+            <TextBlock Text="Вывод в культурах, языках:"/>
+            <TextBlock Margin="10">
+                <Run Text="Окна:"/>
+                <Run x:Name="textBox" Text="{Binding Mode=OneWay}"/>
+            </TextBlock>
+            <TextBlock Text="{Binding StringFormat='ru элемента: {0}'}"
+                       Margin="10"
+                       Language="ru"/>
+            <TextBlock Text="{Binding StringFormat='en элемента: {0}'}"
+                       Margin="10"
+                       Language="en"/>
+            <Grid Language="ru">
+                <TextBlock Text="{Binding StringFormat='ru контейнера: {0}'}"
+                           Margin="10"/>
+            </Grid>
+            <TextBlock Text="{Binding ConverterCulture=ru, StringFormat='ru привязки: {0}'}"
+                       Margin="10"
+                       Language="en"/>
+            <TextBlock x:Name="tBlockParse" Text="{Binding Text, ElementName=textBox, Converter={local:StringToNumber}, StringFormat='Метод Parse: {0}'}"
+                       Margin="10"/>
+        </StackPanel>
+        <StackPanel Background="#FFE0FFE0">
+            <TextBlock Text="Вывод и задание культуры"/>
+            <TextBlock Text="{Binding Language, ElementName=window, Converter={local:LanguageToCulture}, StringFormat='Культура Окна: {0}'}"
+                       Margin="0,20,0,0"/>
+            <TextBlock Text="Выбрать язык Окна:"/>
+            <ComboBox ItemsSource="{DynamicResource cultures}" SelectionChanged="OnSelectLanguage"/>
+            <TextBlock x:Name="tBlockThread" Text="{Binding ElementName=window, Converter={local:LanguageToCulture}, StringFormat='Культура потока: {0}'}"
+                       Margin="0,40,0,0"/>
+            <TextBlock Text="Выбрать культуру Потока:"/>
+            <ComboBox ItemsSource="{DynamicResource cultures}" SelectionChanged="OnSelectCulture"/>
+        </StackPanel>
+    </UniformGrid>
+</Window>

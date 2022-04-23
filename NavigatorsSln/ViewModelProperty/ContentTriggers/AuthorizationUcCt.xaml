@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="ViewModelProperties.AuthorizationUcCt"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ViewModelProperties"
+             xmlns:mext="clr-namespace:MarkupExtensions;assembly=Common"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Background="AliceBlue">
+    <d:FrameworkElement.DataContext>
+        <local:AuthorizationVM/>
+    </d:FrameworkElement.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Страница авторизации  (Триггеры Контента)" HorizontalAlignment="Center" FontSize="20"/>
+        <ContentPresenter Grid.Row="1" Margin="20">
+            <ContentPresenter.Style>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Content" Value="{mext:CreateInstance local:WelcomeUC}"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding AuthorizationMode}" Value="SignUp">
+                            <Setter Property="Content" Value="{mext:CreateInstance local:SignUpUC}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding AuthorizationMode}" Value="SignIn">
+                            <Setter Property="Content" Value="{mext:CreateInstance local:SignInUC}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentPresenter.Style>
+        </ContentPresenter>
+    </Grid>
+</UserControl>
