@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Canvas.cs" />
-    <Compile Include="FrmElem.cs" />
+    <Compile Include="FrameworkElementHelper.cs" />
     <Compile Include="Grid - Rows, Columns.cs" />
     <Compile Include="Grid - Row, Column.cs" />
     <Compile Include="PassBox - Text.cs" />
