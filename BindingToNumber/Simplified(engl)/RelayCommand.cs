@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -10,29 +9,46 @@ namespace Simplified
     /// and added a constructor for methods without a parameter.</summary>
     public class RelayCommand : ICommand
     {
-        protected readonly CanExecuteHandler<object> canExecute;
-        protected readonly ExecuteHandler<object> execute;
+        protected readonly CanExecuteHandler<object?> canExecute;
+        protected readonly ExecuteHandler<object?> execute;
         private readonly EventHandler requerySuggested;
 
         /// <inheritdoc cref="ICommand.CanExecuteChanged"/>
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler? CanExecuteChanged;
 
         /// <summary> Command constructor. </summary>
         /// <param name = "execute"> Command method to execute. </param>
         /// <param name = "canExecute"> Method that returns the state of the command. </param>
-        public RelayCommand(ExecuteHandler<object> execute, CanExecuteHandler<object> canExecute = null)
-           : this()
+        public RelayCommand(ExecuteHandler<object?> execute, CanExecuteHandler<object?> canExecute)
         {
-            this.execute = execute ?? throw new ArgumentNullException(nameof(execute));
+            ArgumentNullException.ThrowIfNull(execute);
+            ArgumentNullException.ThrowIfNull(canExecute);
+            this.execute = execute;
             this.canExecute = canExecute;
+
+            requerySuggested = (o, e) => Invalidate();
+            CommandManager.RequerySuggested += requerySuggested;
         }
 
-        /// <inheritdoc cref="RelayCommand(ExecuteHandler{object}, CanExecuteHandler{object})"/>
-        public RelayCommand(ExecuteHandler execute, CanExecuteHandler canExecute = null)
+        /// <inheritdoc cref="RelayCommand(ExecuteHandler{object?}, CanExecuteHandler{object?})"/>
+        public RelayCommand(ExecuteHandler<object?> execute)
+            : this(execute, _ => true)
+        { }
+
+        /// <inheritdoc cref="RelayCommand(ExecuteHandler{object?}, CanExecuteHandler{object?})"/>
+        public RelayCommand(ExecuteHandler execute, CanExecuteHandler canExecute)
                 : this
                 (
                       p => execute(),
-                      p => canExecute?.Invoke() ?? true
+                      (canExecute is null ? null : p => canExecute())!
+                )
+        { }
+
+        /// <inheritdoc cref="RelayCommand(ExecuteHandler{object?}, CanExecuteHandler{object?})"/>
+        public RelayCommand(ExecuteHandler execute)
+                : this
+                (
+                      p => execute()
                 )
         { }
 
@@ -43,35 +59,29 @@ namespace Simplified
         {
             if (dispatcher.CheckAccess())
             {
-                invalidate();
+                Invalidate();
             }
             else
             {
-                _ = dispatcher.BeginInvoke(invalidate);
+                _ = dispatcher.BeginInvoke(Invalidate);
             }
         }
-        private readonly Action invalidate;
-        private RelayCommand()
-        {
-            invalidate = () => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
 
-            requerySuggested = (o, e) => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-            CommandManager.RequerySuggested += requerySuggested;
-        }
+        private void Invalidate()
+            => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+
 
         /// <inheritdoc cref="ICommand.CanExecute(object)"/>
-        public bool CanExecute(object parameter)
+        public bool CanExecute(object? parameter)
         {
-            return canExecute?.Invoke(parameter) ?? true;
+            return canExecute(parameter);
         }
 
         /// <inheritdoc cref="ICommand.Execute(object)"/>
-        public void Execute(object parameter)
+        public void Execute(object? parameter)
         {
-            execute?.Invoke(parameter);
+            execute(parameter);
         }
 
     }
-
-
 }

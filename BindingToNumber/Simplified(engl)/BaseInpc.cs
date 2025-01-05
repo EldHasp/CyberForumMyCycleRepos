@@ -7,15 +7,24 @@ namespace Simplified
     public abstract class BaseInpc : INotifyPropertyChanged
     {
         /// <inheritdoc cref="INotifyPropertyChanged"/>
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>The protected method for raising the event <see cref = "PropertyChanged"/>.</summary>
         /// <param name="propertyName">The name of the changed property.
         /// If the value is not specified, the name of the method in which the call was made is used.</param>
-        protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+        protected void RaisePropertyChanged([CallerMemberName] in string? propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChangedEventHandler? propertyChanged = PropertyChanged;
+            if (propertyChanged is not null)
+            {
+                PropertyChangedEventArgs args = string.IsNullOrEmpty(propertyName)
+                                ? allProperties
+                                : new PropertyChangedEventArgs(propertyName);
+                propertyChanged(this, args);
+            }
         }
+
+        private static readonly PropertyChangedEventArgs allProperties = new PropertyChangedEventArgs(string.Empty);
 
         /// <summary> Protected method for assigning a value to a field and raising 
         /// an event <see cref = "PropertyChanged" />. </summary>
@@ -25,6 +34,10 @@ namespace Simplified
         /// <param name = "propertyName"> The name of the changed property.
         /// If no value is specified, then the name of the method 
         /// in which the call was made is used. </param>
+        /// <param name="isAlways">If <see langword="true"/>, then the assignment to the field,
+        /// the raising of the <see cref="PropertyChanged"/> event and
+        /// the calling of the <see cref="OnPropertyChanged(in string, in object?, in object?)"/> method
+        /// always occur, regardless of the comparison of the new value with the old one.</param>
         /// <remarks> The method is intended for use in the property setter. <br/>
         /// To check for changes,
         /// used the <see cref = "object.Equals (object, object)" /> method.
@@ -36,9 +49,10 @@ namespace Simplified
         /// After the event is created,
         /// the <see cref = "OnPropertyChanged (string, object, object)" />
         /// method is called. </remarks>
-        protected void Set<T>(ref T propertyFiled, T newValue, [CallerMemberName] string propertyName = null)
+        protected void Set<T>(ref T propertyFiled, in T newValue, in bool isAlways = false, [CallerMemberName] in string? propertyName = null)
         {
-            if (!object.Equals(propertyFiled, newValue))
+            ArgumentException.ThrowIfNullOrWhiteSpace(propertyName);
+            if (isAlways || !Equals(propertyFiled, newValue))
             {
                 T oldValue = propertyFiled;
                 propertyFiled = newValue;
@@ -55,6 +69,6 @@ namespace Simplified
         /// <remarks> Can be overridden in derived classes to respond to property value changes. <br/>
         /// It is recommended to call the base method as the first operator in the overridden method. <br/>
         /// If the overridden method does not call the base class, then an unwanted change in the base class logic is possible. </remarks>
-        protected virtual void OnPropertyChanged(string propertyName, object oldValue, object newValue) { }
+        protected virtual void OnPropertyChanged(in string propertyName, in object? oldValue, in object? newValue) { }
     }
 }
